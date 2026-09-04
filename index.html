@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI GeoPetro Pro</title>
+
+<style>
+:root{
+    --bg:#020a11;
+    --panel:#071824;
+    --panel2:#0a2233;
+    --border:#173c52;
+    --text:#edf8ff;
+    --muted:#7895a6;
+    --green:#25e39a;
+    --cyan:#1dd5e8;
+    --blue:#2789ff;
+    --yellow:#ffc928;
+    --red:#ff4f61;
+    --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Tahoma,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 80% 0%,#063b4b55,transparent 35%),
+        radial-gradient(circle at 10% 100%,#06304a55,transparent 35%),
+        var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= LOGIN ================= */
+
+.login{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    background:#020a11;
+}
+
+.login-left{
+    position:relative;
+    padding:7%;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 70%,#08706b55,transparent 30%),
+        linear-gradient(145deg,#03121e,#020a11);
+}
+
+.login-left::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(transparent 96%,#16e8a016 97%),
+        linear-gradient(90deg,transparent 96%,#16e8a016 97%);
+    background-size:45px 45px;
+    transform:perspective(500px) rotateX(55deg) scale(1.8);
+    transform-origin:center bottom;
+    opacity:.35;
+}
+
+.brand{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:22px;
+    font-weight:900;
+}
+
+.brand-icon{
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border-radius:15px;
+    background:linear-gradient(135deg,var(--green),var(--cyan));
+    color:#021016;
+    font-size:26px;
+    box-shadow:0 0 35px #20dfa555;
+}
+
+.brand small{
+    display:block;
+    font-size:9px;
+    color:var(--muted);
+    margin-top:3px;
+    letter-spacing:1px;
+}
+
+.hero{
+    position:relative;
+    z-index:2;
+    margin-top:90px;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.05;
+    letter-spacing:-2px;
+}
+
+.hero h1 span{
+    color:var(--green);
+}
+
+.hero p{
+    max-width:570px;
+    color:#9bb4c1;
+    line-height:2;
+    margin-top:20px;
+    font-size:13px;
+}
+
+.energy-model{
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:6%;
+    height:230px;
+    transform:perspective(700px) rotateX(58deg) rotateZ(-5deg);
+}
+
+.energy-layer{
+    position:absolute;
+    left:5%;
+    right:5%;
+    height:30px;
+    border:1px solid #20dfaa33;
+    background:linear-gradient(
+        90deg,
+        #063348,
+        #0b8a7a,
+        #123e82,
+        #0b283b
+    );
+    box-shadow:0 0 25px #0dd9b622;
+}
+
+.energy-layer:nth-child(1){top:0}
+.energy-layer:nth-child(2){top:30px}
+.energy-layer:nth-child(3){top:60px}
+.energy-layer:nth-child(4){top:90px}
+.energy-layer:nth-child(5){top:120px}
+.energy-layer:nth-child(6){top:150px}
+.energy-layer:nth-child(7){top:180px}
+
+.well-line{
+    position:absolute;
+    width:3px;
+    height:210px;
+    background:var(--red);
+    left:52%;
+    top:-80px;
+    box-shadow:0 0 20px var(--red);
+}
+
+.well-line::before{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--red);
+    left:-4px;
+}
+
+.trust{
+    position:absolute;
+    z-index:3;
+    bottom:35px;
+    left:7%;
+    right:7%;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.trust-card{
+    padding:13px;
+    text-align:center;
+    border:1px solid #1d465a;
+    background:#061722dd;
+    border-radius:12px;
+}
+
+.trust-card b{
+    color:var(--green);
+    display:block;
+    font-size:21px;
+    margin-bottom:6px;
+}
+
+.trust-card span{
+    color:#a7bbc5;
+    font-size:9px;
+}
+
+.login-right{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f4f7f7;
+    color:#17242b;
+    padding:30px;
+}
+
+.login-box{
+    width:min(500px,100%);
+    background:white;
+    padding:38px;
+    border-radius:20px;
+    box-shadow:0 30px 100px #0002;
+}
+
+.login-box h2{
+    font-size:25px;
+}
+
+.login-box h2 span{
+    color:#159866;
+}
+
+.login-box p{
+    color:#78878e;
+    font-size:11px;
+    margin:8px 0 25px;
+}
+
+.field{
+    margin:15px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    font-size:10px;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    border:1px solid #d4dfe2;
+    border-radius:10px;
+    padding:13px;
+    outline:none;
+    background:white;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#21b77c;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:linear-gradient(135deg,#22bd7b,#129866);
+    color:white;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.security{
+    color:#47976f;
+    font-size:9px;
+    margin:12px 0;
+}
+
+/* ================= APP ================= */
+
+.app{
+    display:none;
+}
+
+.app.active{
+    display:block;
+}
+
+.topbar{
+    height:70px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 18px;
+    background:#04131feF;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(20px);
+}
+
+.menu{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    border:1px solid #21465b;
+    background:#092233;
+    color:white;
+    font-size:18px;
+}
+
+.top-brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:bold;
+}
+
+.top-brand-icon{
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--green),var(--cyan));
+    color:#021016;
+}
+
+.project{
+    margin-right:auto;
+    padding:10px 14px;
+    background:#092333;
+    color:white;
+    border:1px solid #244a60;
+    border-radius:9px;
+}
+
+.top-icons{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.icon-btn{
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    background:#092333;
+    color:white;
+    border:1px solid #20465b;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-right:8px;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#164b7f;
+    font-weight:bold;
+}
+
+/* ================= LAYOUT ================= */
+
+.layout{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    border-left:1px solid var(--border);
+    background:#061620;
+    padding:12px;
+    transition:.3s;
+}
+
+.sidebar.closed{
+    width:0;
+    padding:0;
+    overflow:hidden;
+}
+
+.nav{
+    padding:13px;
+    border-radius:9px;
+    color:#9cb2bd;
+    margin-bottom:5px;
+    border:1px solid transparent;
+    transition:.2s;
+}
+
+.nav:hover,
+.nav.active{
+    background:#0a3c62;
+    color:white;
+    border-color:#176294;
+}
+
+.nav span{
+    display:inline-block;
+    width:27px;
+}
+
+.side-status{
+    position:absolute;
+    bottom:15px;
+    width:205px;
+    padding-top:14px;
+    border-top:1px solid #17384b;
+    color:#718c9c;
+    font-size:9px;
+    line-height:2;
+}
+
+/* ================= MAIN ================= */
+
+main{
+    padding:18px;
+    min-width:0;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:14px;
+}
+
+.page-header h1{
+    font-size:24px;
+}
+
+.page-header p{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:5px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.btn{
+    border:1px solid #285066;
+    background:#092334;
+    color:white;
+    border-radius:9px;
+    padding:10px 14px;
+}
+
+.btn.primary{
+    background:linear-gradient(135deg,#19b979,#078b80);
+    border-color:#20d596;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.card{
+    background:
+        linear-gradient(145deg,#0a2333,#071721);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+
+.card-head{
+    height:44px;
+    padding:0 13px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #17384b;
+}
+
+.card-head h3{
+    font-size:11px;
+}
+
+.card-head span{
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* ================= KPI ================= */
+
+.kpis{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:9px;
+}
+
+.kpi{
+    padding:13px;
+    min-height:100px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.kpi-icon{
+    min-width:43px;
+    height:43px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    background:#0b3044;
+    color:var(--green);
+    font-size:20px;
+}
+
+.kpi-value{
+    font-size:22px;
+    font-weight:900;
+}
+
+.kpi-label{
+    color:#a6bbc6;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.kpi-change{
+    font-size:8px;
+    color:var(--green);
+    margin-top:4px;
+}
+
+/* ================= DASHBOARD GRID ================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1.2fr .85fr;
+    gap:10px;
+    margin-top:10px;
+}
+
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1fr 1.2fr 1fr;
+    gap:10px;
+    margin-top:10px;
+}
+
+/* ================= MAP ================= */
+
+.map{
+    height:365px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 50%,#3c5c3e,#173d45 35%,#0a2937 70%),
+        #123;
+}
+
+.map::before{
+    content:"";
+    position:absolute;
+    inset:-20%;
+    opacity:.3;
+    background:
+        repeating-linear-gradient(25deg,transparent 0 40px,#d6f1d222 41px 42px),
+        repeating-linear-gradient(110deg,transparent 0 60px,#d6f1d222 61px 62px);
+    transform:rotate(-8deg);
+}
+
+.map::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(90deg,transparent 49.8%,#ffffff22 50%,transparent 50.2%),
+        linear-gradient(0deg,transparent 49.8%,#ffffff22 50%,transparent 50.2%);
+    background-size:80px 80px;
+}
+
+.heat{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(25px);
+    background:radial-gradient(
+        circle,
+        #ff3434,
+        #ff9f16 22%,
+        #e8e82d 42%,
+        #1ccfc0 62%,
+        transparent 72%
+    );
+    z-index:1;
+}
+
+.heat.one{
+    width:230px;
+    height:170px;
+    left:22%;
+    top:23%;
+}
+
+.heat.two{
+    width:180px;
+    height:130px;
+    left:50%;
+    top:48%;
+}
+
+.heat.three{
+    width:140px;
+    height:110px;
+    left:12%;
+    top:65%;
+}
+
+.pin{
+    position:absolute;
+    z-index:5;
+    width:17px;
+    height:17px;
+    border:3px solid white;
+    border-radius:50%;
+    background:#ff3444;
+    box-shadow:0 0 0 3px #06131d,0 0 25px #fff;
+    animation:pulse 2s infinite;
+}
+
+.pin label{
+    position:absolute;
+    top:19px;
+    right:-20px;
+    white-space:nowrap;
+    font-size:8px;
+    color:white;
+    background:#04131dcc;
+    padding:4px 6px;
+    border-radius:5px;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.25);
+        box-shadow:0 0 0 5px #06131d,0 0 30px #20e8a0;
+    }
+}
+
+.pin.a{left:27%;top:30%}
+.pin.b{left:57%;top:32%}
+.pin.c{left:44%;top:51%}
+.pin.d{left:19%;top:68%}
+.pin.e{left:65%;top:64%}
+
+.map-tools{
+    position:absolute;
+    z-index:10;
+    top:10px;
+    left:10px;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.map-tools button{
+    width:32px;
+    height:32px;
+    border-radius:7px;
+    border:1px solid #456879;
+    background:#071b28dd;
+    color:white;
+}
+
+.legend{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    z-index:10;
+    padding:9px;
+    border-radius:8px;
+    background:#03131de8;
+    border:1px solid #355467;
+    font-size:8px;
+}
+
+.gradient{
+    width:14px;
+    height:75px;
+    margin-top:5px;
+    background:linear-gradient(
+        #f33,
+        #ffad18,
+        #e6e52a,
+        #18c7c0,
+        #1466a8
+    );
+}
+
+/* ================= SEISMIC ================= */
+
+.seismic{
+    height:365px;
+    background:#ddd;
+}
+
+.seismic svg{
+    width:100%;
+    height:100%;
+}
+
+/* ================= WELL LOG ================= */
+
+.well-log{
+    height:365px;
+    background:#f4f5f4;
+    color:#18252c;
+    position:relative;
+    padding:20px 7px 7px;
+}
+
+.payzone{
+    position:absolute;
+    top:43%;
+    left:0;
+    right:0;
+    height:20%;
+    background:#8fd98666;
+    border-block:1px solid #4d9a55;
+}
+
+.tracks{
+    height:100%;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.track{
+    border-left:1px solid #9ba5a9;
+    position:relative;
+}
+
+.track strong{
+    position:absolute;
+    top:-16px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:8px;
+}
+
+.track svg{
+    width:100%;
+    height:100%;
+}
+
+/* ================= 3D ================= */
+
+.reservoir{
+    height:300px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 40%,#155260,#06151f 65%);
+}
+
+.reservoir-model{
+    position:absolute;
+    left:10%;
+    right:10%;
+    top:26%;
+    height:58%;
+    transform:
+        perspective(600px)
+        rotateX(57deg)
+        rotateZ(-4deg)
+        skewY(-7deg);
+}
+
+.layer{
+    height:23px;
+    border-top:1px solid #ffffff33;
+    background:
+        linear-gradient(
+            90deg,
+            #082c3a,
+            #139f86,
+            #2879a0,
+            #0c2c3b
+        );
+}
+
+.layer:nth-child(even){
+    background:
+        linear-gradient(
+            90deg,
+            #0a3940,
+            #2c9d73,
+            #28548c,
+            #102c3c
+        );
+}
+
+.reservoir-hot{
+    position:absolute;
+    width:170px;
+    height:90px;
+    left:34%;
+    top:39%;
+    border-radius:50%;
+    background:radial-gradient(
+        ellipse,
+        #ff3b2f,
+        #ff9f1a77,
+        transparent 70%
+    );
+    filter:blur(10px);
+}
+
+.drill{
+    position:absolute;
+    left:58%;
+    top:12%;
+    height:65%;
+    border-left:3px solid #ff414f;
+    box-shadow:0 0 20px #ff414f;
+}
+
+.drill::before{
+    content:"";
+    position:absolute;
+    left:-7px;
+    top:-6px;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:#ff414f;
+}
+
+/* ================= TABLE ================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:9px;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #183a4d;
+    text-align:right;
+}
+
+th{
+    background:#092131;
+    color:#8fa7b5;
+}
+
+.high{color:var(--green)}
+.medium{color:var(--yellow)}
+.low{color:var(--red)}
+
+.badge{
+    padding:4px 7px;
+    border-radius:99px;
+    background:#103b31;
+}
+
+/* ================= AI SUMMARY ================= */
+
+.summary{
+    padding:16px;
+}
+
+.score{
+    font-size:42px;
+    font-weight:900;
+    margin:5px 0;
+}
+
+.progress{
+    height:7px;
+    border-radius:99px;
+    background:#123043;
+    overflow:hidden;
+}
+
+.progress i{
+    display:block;
+    height:100%;
+    width:94%;
+    background:linear-gradient(90deg,var(--cyan),var(--green));
+}
+
+.ai-list{
+    list-style:none;
+    margin-top:14px;
+}
+
+.ai-list li{
+    padding:8px 0;
+    border-bottom:1px solid #15384a;
+    color:#9eb6c2;
+    font-size:9px;
+}
+
+/* ================= OTHER PAGES ================= */
+
+.full-card{
+    min-height:500px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    padding:15px;
+}
+
+.stat{
+    padding:20px;
+    border:1px solid #1a4055;
+    border-radius:10px;
+    background:#081e2b;
+}
+
+.stat h2{
+    font-size:30px;
+}
+
+.stat p{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:5px;
+}
+
+.search{
+    padding:8px 12px;
+    border-radius:7px;
+    background:#071c2a;
+    color:white;
+    border:1px solid #294c60;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:500;
+    background:#000c;
+    place-items:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:grid;
+}
+
+.modal-box{
+    width:min(800px,95vw);
+    max-height:90vh;
+    overflow:auto;
+    background:#081d2a;
+    border:1px solid #2b5d76;
+    border-radius:14px;
+}
+
+.modal-head{
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #214559;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border-radius:7px;
+    border:1px solid #35596b;
+    background:#092131;
+    color:white;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    left:18px;
+    bottom:18px;
+    z-index:99999;
+    background:#092638;
+    border:1px solid #2e6078;
+    padding:12px 17px;
+    border-radius:9px;
+    font-size:10px;
+    transform:translateY(100px);
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px){
+
+    .kpis{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .dashboard-grid,
+    .bottom-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .login{
+        grid-template-columns:1fr;
+    }
+
+    .login-left{
+        display:none;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .dashboard-grid,
+    .bottom-grid,
+    .kpis,
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .project{
+        display:none;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .profile span{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div class="login" id="login">
+
+    <section class="login-left">
+
+        <div class="brand">
+            <div class="brand-icon">⌁</div>
+
+            <div>
+                AI GeoPetro
+                <small>AI-POWERED EXPLORATION PLATFORM</small>
+            </div>
+        </div>
+
+        <div class="hero">
+            <h1>
+                Explore<br>
+                <span>Smarter.</span><br>
+                Decide <span>Better.</span>
+            </h1>
+
+            <p>
+                منصة ذكية لاستكشاف البترول تعتمد على دمج
+                البيانات الجيولوجية والسيزمية وسجلات الآبار
+                وتحويلها إلى مؤشرات واحتمالات تساعد فريق
+                الاستكشاف على اتخاذ قرارات أفضل.
+            </p>
+        </div>
+
+        <div class="energy-model">
+
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+            <div class="energy-layer"></div>
+
+            <div class="well-line"></div>
+
+        </div>
+
+        <div class="trust">
+
+            <div class="trust-card">
+                <b>AI</b>
+                <span>Intelligent Analysis</span>
+            </div>
+
+            <div class="trust-card">
+                <b>3D</b>
+                <span>Reservoir Modeling</span>
+            </div>
+
+            <div class="trust-card">
+                <b>96%</b>
+                <span>Model Confidence</span>
+            </div>
+
+            <div class="trust-card">
+                <b>24/7</b>
+                <span>Monitoring</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="login-right">
+
+        <form class="login-box" id="loginForm">
+
+            <h2>
+                Welcome to
+                <span>AI GeoPetro</span>
+            </h2>
+
+            <p>
+                Sign in to access your exploration workspace
+            </p>
+
+            <div class="field">
+
+                <label>Company / Organization</label>
+
+                <select>
+                    <option>PetroTech Exploration</option>
+                    <option>GeoEnergy Research</option>
+                    <option>AI Energy Labs</option>
+                </select>
+
+            </div>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    value="geologist@geopetro.ai"
+                    required
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    value="12345678"
+                    required
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Role</label>
+
+                <select>
+                    <option>Geologist</option>
+                    <option>Exploration Engineer</option>
+                    <option>Data Scientist</option>
+                    <option>Project Manager</option>
+                </select>
+
+            </div>
+
+            <div class="security">
+                ✓ Secure workspace · Role Based Access · Project Isolation
+            </div>
+
+            <button class="login-btn">
+                🔐 Sign In
+            </button>
+
+        </form>
+
+    </section>
+
+</div>
+
+
+<!-- ================= APPLICATION ================= -->
+
+<div class="app" id="app">
+
+<header class="topbar">
+
+    <button class="menu" id="menuBtn">☰</button>
+
+    <div class="top-brand">
+
+        <div class="top-brand-icon">⌁</div>
+
+        <div>
+            AI GeoPetro
+            <small style="display:block;color:#7693a4;font-size:7px">
+                INTELLIGENT EXPLORATION
+            </small>
+        </div>
+
+    </div>
+
+    <select class="project">
+
+        <option>Project: Abu Senan Field - 01</option>
+        <option>Project: West Desert Block</option>
+        <option>Project: Exploration Area B</option>
+
+    </select>
+
+    <div class="top-icons">
+
+        <button class="icon-btn"
+        onclick="toggleTheme()">
+            ☾
+        </button>
+
+        <button class="icon-btn"
+        onclick="toast('3 new AI notifications')">
+            🔔
+        </button>
+
+    </div>
+
+    <div class="profile">
+
+        <span style="font-size:10px;color:#9db3be">
+            Geologist
+        </span>
+
+        <div class="avatar">
+            GM
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="nav active"
+         data-page="dashboard">
+        <span>⌂</span>
+        Dashboard
+    </div>
+
+    <div class="nav"
+         data-page="data">
+        <span>▤</span>
+        Data Center
+    </div>
+
+    <div class="nav"
+         data-page="seismic">
+        <span>≈</span>
+        Seismic AI
+    </div>
+
+    <div class="nav"
+         data-page="wells">
+        <span>♜</span>
+        Well Analysis
+    </div>
+
+    <div class="nav"
+         data-page="zones">
+        <span>◈</span>
+        Exploration Zones
+    </div>
+
+    <div class="nav"
+         data-page="reports">
+        <span>▣</span>
+        AI Reports
+    </div>
+
+    <div class="nav"
+         data-page="settings">
+        <span>⚙</span>
+        Settings
+    </div>
+
+    <div class="side-status">
+        AI Engine v4.8.2<br>
+        <span style="color:#28df92">
+            ● All systems operational
+        </span>
+        <br>
+        Database: Connected
+    </div>
+
+</aside>
+
+
+<main>
+
+<!-- ================= DASHBOARD ================= -->
+
+<section
+class="page active"
+id="dashboard">
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            AI Exploration Command Center
+        </h1>
+
+        <p>
+            Real-time overview of geological intelligence
+            and exploration opportunities.
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+        class="btn"
+        onclick="toast('Data synchronization completed')">
+            ↻ Refresh
+        </button>
+
+        <button
+        class="btn primary"
+        onclick="runAI()">
+            ⚡ Run AI Analysis
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="kpis">
+
+<div class="card kpi">
+    <div class="kpi-icon">⌁</div>
+    <div>
+        <div class="kpi-value" id="highZones">14</div>
+        <div class="kpi-label">High Probability Zones</div>
+        <div class="kpi-change">▲ +2 this run</div>
+    </div>
+</div>
+
+<div class="card kpi">
+    <div class="kpi-icon">◒</div>
+    <div>
+        <div class="kpi-value">27</div>
+        <div class="kpi-label">Medium Probability</div>
+        <div class="kpi-change">Stable</div>
+    </div>
+</div>
+
+<div class="card kpi">
+    <div class="kpi-icon">◌</div>
+    <div>
+        <div class="kpi-value">30</div>
+        <div class="kpi-label">Low Probability</div>
+        <div class="kpi-change">▼ -3</div>
+    </div>
+</div>
+
+<div class="card kpi">
+    <div class="kpi-icon">◷</div>
+    <div>
+        <div class="kpi-value" id="accuracy">
+            96.2%
+        </div>
+        <div class="kpi-label">AI Model Accuracy</div>
+        <div class="kpi-change">▲ +1.4%</div>
+    </div>
+</div>
+
+<div class="card kpi">
+    <div class="kpi-icon">⌁</div>
+    <div>
+        <div class="kpi-value">184</div>
+        <div class="kpi-label">AI Anomalies</div>
+        <div class="kpi-change">12 new</div>
+    </div>
+</div>
+
+<div class="card kpi">
+    <div class="kpi-icon">◫</div>
+    <div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-label">Connected Sources</div>
+        <div class="kpi-change">Live</div>
+    </div>
+</div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+
+<!-- MAP -->
+
+<div class="card">
+
+<div class="card-head">
+
+    <h3>
+        🗺 AI Prospectivity Heatmap
+    </h3>
+
+    <span>
+        Live Analysis
+    </span>
+
+</div>
+
+<div class="map">
+
+<div class="heat one"></div>
+<div class="heat two"></div>
+<div class="heat three"></div>
+
+<div class="pin a">
+    <label>ZONE A · 92%</label>
+</div>
+
+<div class="pin b">
+    <label>ZONE B · 88%</label>
+</div>
+
+<div class="pin c">
+    <label>ZONE C · 74%</label>
+</div>
+
+<div class="pin d">
+    <label>ZONE D · 68%</label>
+</div>
+
+<div class="pin e">
+    <label>ZONE E · 35%</label>
+</div>
+
+<div class="map-tools">
+
+<button>＋</button>
+<button>−</button>
+<button>⌖</button>
+<button>◈</button>
+
+</div>
+
+<div class="legend">
+
+    Hydrocarbon Probability
+
+    <div class="gradient"></div>
+
+    HIGH<br>
+    MEDIUM<br>
+    LOW
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SEISMIC -->
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+    🌊 AI Seismic Interpretation
+</h3>
+
+<span>
+    3 Horizons
+</span>
+
+</div>
+
+<div class="seismic">
+
+<svg
+viewBox="0 0 800 365"
+preserveAspectRatio="none">
+
+<rect
+width="800"
+height="365"
+fill="#ddd"/>
+
+<script>
+</script>
+
+<g
+fill="none"
+stroke="#555"
+opacity=".5">
+
+<path d="M0 20 Q150 5 300 20 T600 15 T800 25"/>
+<path d="M0 35 Q150 20 300 35 T600 30 T800 40"/>
+<path d="M0 50 Q150 35 300 50 T600 45 T800 55"/>
+<path d="M0 65 Q150 50 300 65 T600 60 T800 70"/>
+<path d="M0 80 Q150 65 300 80 T600 75 T800 85"/>
+<path d="M0 95 Q150 80 300 95 T600 90 T800 100"/>
+<path d="M0 110 Q150 95 300 110 T600 105 T800 115"/>
+<path d="M0 125 Q150 110 300 125 T600 120 T800 130"/>
+<path d="M0 140 Q150 125 300 140 T600 135 T800 145"/>
+<path d="M0 155 Q150 140 300 155 T600 150 T800 160"/>
+<path d="M0 170 Q150 155 300 170 T600 165 T800 175"/>
+<path d="M0 185 Q150 170 300 185 T600 180 T800 190"/>
+<path d="M0 200 Q150 185 300 200 T600 195 T800 205"/>
+<path d="M0 215 Q150 200 300 215 T600 210 T800 220"/>
+<path d="M0 230 Q150 215 300 230 T600 225 T800 235"/>
+<path d="M0 245 Q150 230 300 245 T600 240 T800 250"/>
+<path d="M0 260 Q150 245 300 260 T600 255 T800 265"/>
+<path d="M0 275 Q150 260 300 275 T600 270 T800 280"/>
+<path d="M0 290 Q150 275 300 290 T600 285 T800 295"/>
+<path d="M0 305 Q150 290 300 305 T600 300 T800 310"/>
+<path d="M0 320 Q150 305 300 320 T600 315 T800 325"/>
+<path d="M0 335 Q150 320 300 335 T600 330 T800 340"/>
+
+</g>
+
+<path
+d="M0 150 Q140 115 280 150 T540 130 T800 155"
+fill="none"
+stroke="#e33"
+stroke-width="5"/>
+
+<path
+d="M0 220 Q140 180 280 220 T540 190 T800 225"
+fill="none"
+stroke="#11aaa0"
+stroke-width="5"/>
+
+<path
+d="M0 275 Q140 235 280 275 T540 245 T800 280"
+fill="none"
+stroke="#9a54db"
+stroke-width="5"/>
+
+</svg>
+
+</div>
+
+</div>
+
+
+<!-- WELL LOG -->
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+    🛢 Well Log Intelligence
+</h3>
+
+<span>
+    AB-1 · TD 2480m
+</span>
+
+</div>
+
+<div class="well-log">
+
+<div class="payzone"></div>
+
+<div class="tracks">
+
+<div class="track">
+<strong>GR</strong>
+<svg viewBox="0 0 100 300"
+preserveAspectRatio="none">
+<path
+d="M20 0 L70 20 L30 40 L80 60 L25 80 L70 100 L35 120 L75 140 L25 165 L70 190 L35 220 L75 245 L25 270 L65 300"
+fill="none"
+stroke="#3aa65a"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>RES</strong>
+<svg viewBox="0 0 100 300"
+preserveAspectRatio="none">
+<path
+d="M60 0 L30 25 L70 50 L20 75 L75 100 L35 125 L65 150 L25 175 L75 200 L30 225 L70 250 L20 275 L65 300"
+fill="none"
+stroke="#df4038"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>RHOB</strong>
+<svg viewBox="0 0 100 300"
+preserveAspectRatio="none">
+<path
+d="M30 0 L70 25 L40 50 L65 75 L25 100 L75 125 L35 150 L60 175 L30 200 L70 225 L35 250 L75 275 L30 300"
+fill="none"
+stroke="#e59a28"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>NPHI</strong>
+<svg viewBox="0 0 100 300"
+preserveAspectRatio="none">
+<path
+d="M65 0 L25 25 L75 50 L35 75 L65 100 L20 125 L70 150 L30 175 L75 200 L25 225 L65 250 L30 275 L70 300"
+fill="none"
+stroke="#7351a0"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>SW</strong>
+<svg viewBox="0 0 100 300"
+preserveAspectRatio="none">
+<path
+d="M25 0 L70 30 L40 60 L75 90 L25 120 L65 150 L35 180 L70 210 L25 240 L65 270 L35 300"
+fill="none"
+stroke="#168dc0"
+stroke-width="2"/>
+</svg>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bottom-grid">
+
+
+<!-- 3D -->
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+    🧊 3D Reservoir Model
+</h3>
+
+<button
+class="btn"
+onclick="rotateModel()">
+    ⟳
+</button>
+
+</div>
+
+<div class="reservoir">
+
+<div
+class="reservoir-model"
+id="reservoirModel">
+
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+<div class="layer"></div>
+
+</div>
+
+<div class="reservoir-hot"></div>
+
+<div class="drill"></div>
+
+</div>
+
+</div>
+
+
+<!-- RANKING -->
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+    🎯 AI Prospect Ranking
+</h3>
+
+<span>
+    Updated now
+</span>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Zone</th>
+<th>Probability</th>
+<th>Confidence</th>
+<th>Recommendation</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Zone A</td>
+<td class="high">92%</td>
+<td>96%</td>
+<td class="high">Drill Candidate</td>
+</tr>
+
+<tr>
+<td>Zone B</td>
+<td class="high">88%</td>
+<td>93%</td>
+<td class="high">Drill Candidate</td>
+</tr>
+
+<tr>
+<td>Zone C</td>
+<td class="medium">74%</td>
+<td>84%</td>
+<td class="medium">More Study</td>
+</tr>
+
+<tr>
+<td>Zone D</td>
+<td class="medium">68%</td>
+<td>79%</td>
+<td class="medium">More Study</td>
+</tr>
+
+<tr>
+<td>Zone E</td>
+<td class="low">35%</td>
+<td>58%</td>
+<td class="low">Low Priority</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+    🧠 AI Decision Intelligence
+</h3>
+
+<span class="high">
+    READY
+</span>
+
+</div>
+
+<div class="summary">
+
+<div style="font-size:9px;color:#9bb2bd">
+Overall Exploration Score
+</div>
+
+<div class="score">
+8.7
+<span style="font-size:11px;color:#718b99">
+/ 10
+</span>
+</div>
+
+<div style="font-size:9px;color:#718b99">
+Model Confidence
+</div>
+
+<div class="progress">
+<i></i>
+</div>
+
+<ul class="ai-list">
+
+<li>
+✓ Seismic anomaly detected
+</li>
+
+<li>
+✓ Reservoir geometry favorable
+</li>
+
+<li>
+✓ Well log correlation strong
+</li>
+
+<li>
+✓ Zone A exceeds decision threshold
+</li>
+
+</ul>
+
+<button
+class="btn primary"
+style="margin-top:12px"
+onclick="openReport()">
+
+View AI Report
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= DATA ================= -->
+
+<section class="page" id="data">
+
+<div class="page-header">
+
+<div>
+<h1>Data Intelligence Center</h1>
+<p>Centralized exploration data management.</p>
+</div>
+
+<button
+class="btn primary"
+onclick="toast('Data source wizard opened')">
+＋ Add Data Source
+</button>
+
+</div>
+
+<div class="card full-card">
+
+<div class="card-head">
+<h3>Connected Data Sources</h3>
+<span class="high">6 ACTIVE</span>
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Source</th>
+<th>Type</th>
+<th>Size</th>
+<th>Status</th>
+<th>Last Sync</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>3D Seismic Survey</td>
+<td>SEG-Y</td>
+<td>18.4 GB</td>
+<td class="high">Connected</td>
+<td>17 min ago</td>
+</tr>
+
+<tr>
+<td>Well AB-1</td>
+<td>LAS</td>
+<td>42 Logs</td>
+<td class="high">Connected</td>
+<td>22 min ago</td>
+</tr>
+
+<tr>
+<td>Well AB-2</td>
+<td>LAS</td>
+<td>39 Logs</td>
+<td class="high">Connected</td>
+<td>22 min ago</td>
+</tr>
+
+<tr>
+<td>Geological Layers</td>
+<td>GeoTIFF</td>
+<td>24 Layers</td>
+<td class="high">Connected</td>
+<td>1 hour ago</td>
+</tr>
+
+<tr>
+<td>Satellite Imagery</td>
+<td>Raster</td>
+<td>8.7 GB</td>
+<td class="high">Connected</td>
+<td>2 hours ago</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= SEISMIC ================= -->
+
+<section class="page" id="seismic">
+
+<div class="page-header">
+
+<div>
+<h1>AI Seismic Interpretation</h1>
+<p>Automated horizon, fault and anomaly interpretation.</p>
+</div>
+
+<button
+class="btn primary"
+onclick="runAI()">
+⚡ Analyze Seismic
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="seismic"
+style="height:600px">
+
+<svg
+viewBox="0 0 1200 600"
+preserveAspectRatio="none">
+
+<rect
+width="1200"
+height="600"
+fill="#ddd"/>
+
+<g
+fill="none"
+stroke="#555"
+opacity=".5"
+stroke-width="2">
+
+<path d="M0 20 Q200 0 400 20 T800 15 T1200 25"/>
+<path d="M0 35 Q200 15 400 35 T800 30 T1200 40"/>
+<path d="M0 50 Q200 30 400 50 T800 45 T1200 55"/>
+<path d="M0 65 Q200 45 400 65 T800 60 T1200 70"/>
+<path d="M0 80 Q200 60 400 80 T800 75 T1200 85"/>
+<path d="M0 95 Q200 75 400 95 T800 90 T1200 100"/>
+<path d="M0 110 Q200 90 400 110 T800 105 T1200 115"/>
+<path d="M0 125 Q200 105 400 125 T800 120 T1200 130"/>
+<path d="M0 140 Q200 120 400 140 T800 135 T1200 145"/>
+<path d="M0 155 Q200 135 400 155 T800 150 T1200 160"/>
+<path d="M0 170 Q200 150 400 170 T800 165 T1200 175"/>
+<path d="M0 185 Q200 165 400 185 T800 180 T1200 190"/>
+<path d="M0 200 Q200 180 400 200 T800 195 T1200 205"/>
+<path d="M0 215 Q200 195 400 215 T800 210 T1200 220"/>
+<path d="M0 230 Q200 210 400 230 T800 225 T1200 235"/>
+<path d="M0 245 Q200 225 400 245 T800 240 T1200 250"/>
+<path d="M0 260 Q200 240 400 260 T800 255 T1200 265"/>
+<path d="M0 275 Q200 255 400 275 T800 270 T1200 280"/>
+<path d="M0 290 Q200 270 400 290 T800 285 T1200 295"/>
+<path d="M0 305 Q200 285 400 305 T800 300 T1200 310"/>
+<path d="M0 320 Q200 300 400 320 T800 315 T1200 325"/>
+<path d="M0 335 Q200 315 400 335 T800 330 T1200 340"/>
+<path d="M0 350 Q200 330 400 350 T800 345 T1200 355"/>
+<path d="M0 365 Q200 345 400 365 T800 360 T1200 370"/>
+<path d="M0 380 Q200 360 400 380 T800 375 T1200 385"/>
+<path d="M0 395 Q200 375 400 395 T800 390 T1200 400"/>
+<path d="M0 410 Q200 390 400 410 T800 405 T1200 415"/>
+<path d="M0 425 Q200 405 400 425 T800 420 T1200 430"/>
+<path d="M0 440 Q200 420 400 440 T800 435 T1200 445"/>
+<path d="M0 455 Q200 435 400 455 T800 450 T1200 460"/>
+<path d="M0 470 Q200 450 400 470 T800 465 T1200 475"/>
+<path d="M0 485 Q200 465 400 485 T800 480 T1200 490"/>
+<path d="M0 500 Q200 480 400 500 T800 495 T1200 505"/>
+<path d="M0 515 Q200 495 400 515 T800 510 T1200 520"/>
+<path d="M0 530 Q200 510 400 530 T800 525 T1200 535"/>
+<path d="M0 545 Q200 525 400 545 T800 540 T1200 550"/>
+<path d="M0 560 Q200 540 400 560 T800 555 T1200 565"/>
+
+</g>
+
+<path
+d="M0 230 Q200 180 400 230 T800 195 T1200 235"
+stroke="#df343b"
+stroke-width="7"
+fill="none"/>
+
+<path
+d="M0 350 Q200 290 400 350 T800 300 T1200 355"
+stroke="#12aaa0"
+stroke-width="7"
+fill="none"/>
+
+<path
+d="M0 445 Q200 390 400 445 T800 395 T1200 450"
+stroke="#9955da"
+stroke-width="7"
+fill="none"/>
+
+</svg>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= WELLS ================= -->
+
+<section class="page" id="wells">
+
+<div class="page-header">
+
+<div>
+<h1>Well Intelligence</h1>
+<p>Advanced well log interpretation.</p>
+</div>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat">
+<h2 class="high">38m</h2>
+<p>Net Pay</p>
+</div>
+
+<div class="stat">
+<h2>18.7%</h2>
+<p>Average Porosity</p>
+</div>
+
+<div class="stat">
+<h2>34%</h2>
+<p>Water Saturation</p>
+</div>
+
+<div class="stat">
+<h2 class="high">91%</h2>
+<p>Reservoir Confidence</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-head">
+<h3>AB-1 Composite Log</h3>
+<span>Depth: 1500 — 2480m</span>
+</div>
+
+<div class="well-log" style="height:600px">
+
+<div class="payzone"></div>
+
+<div class="tracks">
+
+<div class="track">
+<strong>GR</strong>
+<svg viewBox="0 0 100 300">
+<path
+d="M20 0 L70 20 L30 40 L80 60 L25 80 L70 100 L35 120 L75 140 L25 165 L70 190 L35 220 L75 245 L25 270 L65 300"
+fill="none"
+stroke="#3aa65a"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>RES</strong>
+<svg viewBox="0 0 100 300">
+<path
+d="M60 0 L30 25 L70 50 L20 75 L75 100 L35 125 L65 150 L25 175 L75 200 L30 225 L70 250 L20 275 L65 300"
+fill="none"
+stroke="#df4038"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>RHOB</strong>
+<svg viewBox="0 0 100 300">
+<path
+d="M30 0 L70 25 L40 50 L65 75 L25 100 L75 125 L35 150 L60 175 L30 200 L70 225 L35 250 L75 275 L30 300"
+fill="none"
+stroke="#e59a28"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>NPHI</strong>
+<svg viewBox="0 0 100 300">
+<path
+d="M65 0 L25 25 L75 50 L35 75 L65 100 L20 125 L70 150 L30 175 L75 200 L25 225 L65 250 L30 275 L70 300"
+fill="none"
+stroke="#7351a0"
+stroke-width="2"/>
+</svg>
+</div>
+
+<div class="track">
+<strong>SW</strong>
+<svg viewBox="0 0 100 300">
+<path
+d="M25 0 L70 30 L40 60 L75 90 L25 120 L65 150 L35 180 L70 210 L25 240 L65 270 L35 300"
+fill="none"
+stroke="#168dc0"
+stroke-width="2"/>
+</svg>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ZONES ================= -->
+
+<section class="page" id="zones">
+
+<div class="page-header">
+
+<div>
+<h1>Exploration Zones</h1>
+<p>AI ranked prospects and drilling candidates.</p>
+</div>
+
+<input
+class="search"
+id="zoneSearch"
+placeholder="Search zones...">
+
+</div>
+
+<div class="card">
+
+<table id="zonesTable">
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>Zone</th>
+<th>Probability</th>
+<th>Area</th>
+<th>Confidence</th>
+<th>Risk</th>
+<th>Recommendation</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>01</td>
+<td>Zone A</td>
+<td class="high">92%</td>
+<td>12.5 km²</td>
+<td>96%</td>
+<td class="high">Low</td>
+<td class="high">Drill Candidate</td>
+</tr>
+
+<tr>
+<td>02</td>
+<td>Zone B</td>
+<td class="high">88%</td>
+<td>8.7 km²</td>
+<td>93%</td>
+<td class="high">Low</td>
+<td class="high">Drill Candidate</td>
+</tr>
+
+<tr>
+<td>03</td>
+<td>Zone C</td>
+<td class="medium">74%</td>
+<td>15.3 km²</td>
+<td>84%</td>
+<td class="medium">Medium</td>
+<td class="medium">More Study</td>
+</tr>
+
+<tr>
+<td>04</td>
+<td>Zone D</td>
+<td class="medium">68%</td>
+<td>10.1 km²</td>
+<td>79%</td>
+<td class="medium">Medium</td>
+<td class="medium">More Study</td>
+</tr>
+
+<tr>
+<td>05</td>
+<td>Zone E</td>
+<td class="low">35%</td>
+<td>6.2 km²</td>
+<td>58%</td>
+<td class="low">High</td>
+<td class="low">Low Priority</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= REPORTS ================= -->
+
+<section class="page" id="reports">
+
+<div class="page-header">
+
+<div>
+<h1>AI Exploration Reports</h1>
+<p>Generated intelligence reports.</p>
+</div>
+
+<button
+class="btn primary"
+onclick="openReport()">
+＋ Generate Report
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="card-head">
+<h3>Recent Reports</h3>
+<span>AI Generated</span>
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Report</th>
+<th>Zone</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Zone A Exploration Assessment</td>
+<td>Zone A</td>
+<td>01 Sep 2026</td>
+<td class="high">Ready</td>
+<td>
+<button
+class="btn"
+onclick="openReport()">
+View
+</button>
+</td>
+</tr>
+
+<tr>
+<td>AB-1 Reservoir Interpretation</td>
+<td>AB-1</td>
+<td>31 Aug 2026</td>
+<td class="high">Ready</td>
+<td>
+<button
+class="btn"
+onclick="openReport()">
+View
+</button>
+</td>
+</tr>
+
+<tr>
+<td>Seismic Anomaly Detection</td>
+<td>Block 01</td>
+<td>30 Aug 2026</td>
+<td class="high">Ready</td>
+<td>
+<button
+class="btn"
+onclick="openReport()">
+View
+</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section class="page" id="settings">
+
+<div class="page-header">
+
+<div>
+<h1>Platform Settings</h1>
+<p>AI model and project configuration.</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<div style="padding:20px">
+
+<div class="field">
+<label style="color:white">
+Project Name
+</label>
+
+<input
+style="background:#061a27;color:white;border-color:#285065"
+value="Abu Senan Field - 01">
+</div>
+
+<div class="field">
+<label style="color:white">
+AI Model
+</label>
+
+<select
+style="background:#061a27;color:white;border-color:#285065">
+
+<option>
+GeoPetro Ensemble v4.8
+</option>
+
+<option>
+ReservoirNet v3.2
+</option>
+
+<option>
+SeismicVision AI v2.7
+</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label style="color:white">
+High Probability Threshold
+</label>
+
+<input
+type="range"
+min="50"
+max="95"
+value="80">
+
+</div>
+
+<button
+class="btn primary"
+onclick="toast('Settings saved successfully')">
+
+Save Configuration
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div
+class="modal"
+id="reportModal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<b>
+AI GeoPetro Intelligence Report
+</b>
+
+<button
+class="close"
+onclick="closeReport()">
+✕
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<h2 style="color:#27df92">
+ZONE A — HIGH PROSPECTIVITY
+</h2>
+
+<div class="stats-grid">
+
+<div class="stat">
+<h2 class="high">92%</h2>
+<p>Hydrocarbon Probability</p>
+</div>
+
+<div class="stat">
+<h2>96%</h2>
+<p>AI Confidence</p>
+</div>
+
+<div class="stat">
+<h2>12.5</h2>
+<p>Area km²</p>
+</div>
+
+<div class="stat">
+<h2 class="high">8.7</h2>
+<p>Exploration Score</p>
+</div>
+
+</div>
+
+<h3 style="margin-top:20px">
+AI Interpretation
+</h3>
+
+<ul class="ai-list">
+
+<li>
+✓ Strong seismic amplitude anomaly detected.
+</li>
+
+<li>
+✓ Structural closure identified.
+</li>
+
+<li>
+✓ Well-log correlation supports reservoir presence.
+</li>
+
+<li>
+✓ Porosity indicators are favorable.
+</li>
+
+<li>
+✓ Confidence exceeds configured decision threshold.
+</li>
+
+</ul>
+
+<h3 style="margin-top:20px">
+Recommendation
+</h3>
+
+<p style="
+color:#a6bdc7;
+line-height:2;
+font-size:11px;
+margin-top:8px">
+
+Zone A is currently ranked as the highest-priority
+exploration candidate. The AI model recommends moving
+to detailed geological and engineering validation before
+any drilling decision.
+
+</p>
+
+<div
+style="
+margin-top:20px;
+padding:13px;
+border:1px solid #6c5520;
+background:#33290b;
+color:#ffd56a;
+border-radius:8px;
+font-size:9px">
+
+⚠ AI GeoPetro is a decision-support platform.
+Final exploration and drilling decisions require
+qualified geological and engineering review.
+
+</div>
+
+<br>
+
+<button
+class="btn primary"
+onclick="toast('Report prepared successfully')">
+
+⬇ Export Intelligence Report
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="toast"
+id="toast">
+</div>
+
+
+<script>
+
+/* ================= LOGIN ================= */
+
+const login =
+document.getElementById("login");
+
+const app =
+document.getElementById("app");
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    login.style.display="none";
+
+    app.classList.add("active");
+
+    toast("Welcome to AI GeoPetro");
+
+});
+
+
+/* ================= NAVIGATION ================= */
+
+const navs =
+document.querySelectorAll(".nav");
+
+const pages =
+document.querySelectorAll(".page");
+
+navs.forEach(nav=>{
+
+    nav.addEventListener("click",()=>{
+
+        navs.forEach(n=>
+            n.classList.remove("active")
+        );
+
+        nav.classList.add("active");
+
+        pages.forEach(page=>
+            page.classList.remove("active")
+        );
+
+        document
+        .getElementById(nav.dataset.page)
+        .classList.add("active");
+
+    });
+
+});
+
+
+/* ================= SIDEBAR ================= */
+
+document
+.getElementById("menuBtn")
+.addEventListener("click",()=>{
+
+    document
+    .getElementById("sidebar")
+    .classList.toggle("closed");
+
+});
+
+
+/* ================= AI ENGINE ================= */
+
+function runAI(){
+
+    toast(
+        "AI Engine is analyzing seismic, wells and geological data..."
+    );
+
+    let progress=0;
+
+    const timer=setInterval(()=>{
+
+        progress+=10;
+
+        if(progress>=100){
+
+            clearInterval(timer);
+
+            document
+            .getElementById("highZones")
+            .textContent="17";
+
+            document
+            .getElementById("accuracy")
+            .textContent="97.4%";
+
+            toast(
+                "AI analysis completed — 3 new prospects detected"
+            );
+
+        }
+
+    },250);
+
+}
+
+
+/* ================= RESERVOIR ================= */
+
+let rotation=0;
+
+function rotateModel(){
+
+    rotation+=12;
+
+    document
+    .getElementById("reservoirModel")
+    .style.transform=
+    `
+    perspective(600px)
+    rotateX(57deg)
+    rotateZ(${rotation}deg)
+    skewY(-7deg)
+    `;
+
+}
+
+
+/* ================= MODAL ================= */
+
+function openReport(){
+
+    document
+    .getElementById("reportModal")
+    .classList.add("show");
+
+}
+
+function closeReport(){
+
+    document
+    .getElementById("reportModal")
+    .classList.remove("show");
+
+}
+
+
+/* ================= TOAST ================= */
+
+let toastTimer;
+
+function toast(message){
+
+    const box=
+    document.getElementById("toast");
+
+    box.textContent=message;
+
+    box.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(()=>{
+
+        box.classList.remove("show");
+
+    },3000);
+
+}
+
+
+/* ================= SEARCH ================= */
+
+document
+.getElementById("zoneSearch")
+.addEventListener("input",function(){
+
+    const value=
+    this.value.toLowerCase();
+
+    document
+    .querySelectorAll("#zonesTable tbody tr")
+    .forEach(row=>{
+
+        row.style.display=
+        row.textContent
+        .toLowerCase()
+        .includes(value)
+        ? ""
+        : "none";
+
+    });
+
+});
+
+
+/* ================= THEME ================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("light");
+
+    toast("Interface mode changed");
+
+}
+
+
+/* ================= ESC ================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="Escape"){
+        closeReport();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+
+
+
+
